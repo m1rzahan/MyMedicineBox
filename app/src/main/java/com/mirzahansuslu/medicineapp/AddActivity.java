@@ -15,10 +15,10 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        medicineName = findViewById(R.id.medicineName);
-        medicineType = findViewById(R.id.medicineType);
-        medicineCount = findViewById(R.id.medicineCount);
-        addButton = findViewById(R.id.addMedicineButton);
+        medicineName = findViewById(R.id.medicineName2);
+        medicineType = findViewById(R.id.medicineType2);
+        medicineCount = findViewById(R.id.medicineCount2);
+        addButton = findViewById(R.id.updateMedicineButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

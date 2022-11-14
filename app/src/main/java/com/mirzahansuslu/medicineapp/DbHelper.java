@@ -15,12 +15,12 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Medicine.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "medicineList";
-    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_ID = "id";
     private static final String COLUMN_MEDICINE_NAME = "medicineName";
     private static final String COLUMN_MEDICINE_TYPE  = "medicineType";
     private static final String COLUMN_MEDICINE_COUNT = "medicineCount";
 
-    public DbHelper(@Nullable Context context) {
+     DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -70,6 +70,27 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+    void updateMedicineData(String rowId, String name, String type, String count) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_MEDICINE_NAME, name);
+        contentValues.put(COLUMN_MEDICINE_TYPE, type);
+        contentValues.put(COLUMN_MEDICINE_COUNT, count);
+
+        long result = db.update(TABLE_NAME,contentValues,"id=?", new String[]{rowId});
+        String TAG = "Message";
+        if(result == -1) {
+            Log.i(TAG,"Description");
+            Toast.makeText(context, "Update Failed ", Toast.LENGTH_SHORT).show();
+
+
+        }
+        else {
+            Toast.makeText(context, "Update succesfully", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
 
 }

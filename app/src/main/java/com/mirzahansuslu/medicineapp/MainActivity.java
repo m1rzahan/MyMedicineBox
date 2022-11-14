@@ -1,9 +1,11 @@
 package com.mirzahansuslu.medicineapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton add_button;
     CustomAdapter customAdapter;
 
+/*
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this,AddActivity.class);
                 startActivity(intent);
+
             }
         });
     dbHelper = new DbHelper(MainActivity.this);
@@ -46,12 +50,22 @@ public class MainActivity extends AppCompatActivity {
         medicineType = new ArrayList<>();
         medicineCount = new ArrayList<>();
         storeMedicineDataInArray();
-        customAdapter = new CustomAdapter(MainActivity.this,medicineId,medicineName,medicineType,medicineCount);
+        customAdapter = new CustomAdapter(MainActivity.this,this, medicineId, medicineName, medicineType,
+                medicineCount);
 
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            recreate();
+        }
+    }
+
     void storeMedicineDataInArray() {
         Cursor cursor = dbHelper.readAllData();
         if(cursor.getCount() == 0) {
