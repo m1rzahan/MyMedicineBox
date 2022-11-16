@@ -78,9 +78,9 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_MEDICINE_COUNT, count);
 
         long result = db.update(TABLE_NAME,contentValues,"id=?", new String[]{rowId});
-        String TAG = "Message";
+
         if(result == -1) {
-            Log.i(TAG,"Description");
+
             Toast.makeText(context, "Update Failed ", Toast.LENGTH_SHORT).show();
 
 
@@ -89,6 +89,24 @@ public class DbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Update succesfully", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    void deleteOneRow(String rowId) {
+         SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME,"id=?",new String[] {rowId});
+        if(result == -1) {
+
+            Toast.makeText(context, "Delete Failed ", Toast.LENGTH_SHORT).show();
+
+
+        }
+        else {
+            Toast.makeText(context, "Succesfully deleted", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    void deleteAllMedicineData() {
+         SQLiteDatabase db = this.getWritableDatabase();
+         db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 
 
